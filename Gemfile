@@ -18,3 +18,7 @@ gem 'highline'
 #gem 'thinking-sphinx', '~> 1.4.3'
 
 gem 'pg'
+
+group :development do
+  gem 'awesome_print'
+end

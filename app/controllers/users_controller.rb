@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_filter :store_location, :only => [:index]
   before_filter :login_required, :only => [:edit, :update, :index]
+  before_filter :load_themes, :only => [:edit, :update]
   include Rboard::Login
 
   def index
@@ -15,15 +16,11 @@ class UsersController < ApplicationController
       redirect_back_or_default(users_path)
   end
 
-  def edit
-    @themes = Theme.all
-  end
-
   def update
-    if !params[:user][:password].blank? &&
-       params[:user][:password] == params[:user][:password_confirmation]
-      params[:user][:crypted_password] = current_user.encrypt(params[:user][:password])
-      flash[:notice] = t(:password_has_been_changed)
+    if current_user.update_attributes params[:user]
+      redirect_to current_user
+    else
+      render
     end
   end
 
@@ -33,5 +30,10 @@ class UsersController < ApplicationController
       flash[:notice] = t(:ip_is_banned)
     end
     redirect_to forums_path
+  end
+
+private
+  def load_themes
+    @themes = Theme.all
   end
 end

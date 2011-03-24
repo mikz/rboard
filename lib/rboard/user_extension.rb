@@ -42,7 +42,7 @@ module Rboard::UserExtension
       belongs_to :theme
       belongs_to :user_level
 
-      before_create :encrypt_password
+      before_save :encrypt_password, :if => :encrypt_password?
       before_create :set_theme
       before_create :set_permissions
       before_save :set_permalink
@@ -50,9 +50,7 @@ module Rboard::UserExtension
 
       before_destroy :anonymous_cannot_be_deleted
 
-      attr_protected :identifier
-
-      attr_accessor :password
+      #attr_protected :identifier
 
       if SEARCHING
         define_index do
@@ -115,9 +113,9 @@ module Rboard::UserExtension
 
       def set_permissions
         # HACK
-        if !User.count.zero? && self.identifier != "anonymous"
-          groups << Group.find_by_identifier("registered_users")
-        end
+        Group.find_all_by_identifier("registered_users").each do |group|
+          self.groups << group
+        end if !User.count.zero? && self.identifier != "anonymous"
       end
 
       def set_permalink

@@ -3,6 +3,16 @@ class User < ActiveRecord::Base
   include Rboard::UserExtension
   include Rboard::Permissions
 
+  alias_attribute :name, :display_name
+  
+  attr_accessible :name, :display_name, :password, :password_confirmation, :email,
+                  :signature, :time_zone, :date_display, :per_page
+                  
+  
+  
+  def self.table_name
+    'users'
+  end
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
@@ -21,7 +31,7 @@ class User < ActiveRecord::Base
   end
 
   def authenticated?(password)
-    crypted_password == encrypt(password)
+    self.password == encrypt(password)
   end
 
   def remember_token?
@@ -43,13 +53,14 @@ class User < ActiveRecord::Base
 
   protected
   def encrypt_password
-    if new_record?
-      self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--")
-      self.crypted_password = encrypt(password)
-    end
+    self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--")
+    self.password = encrypt(password)
   end
-
+  
+  def encrypt_password?
+    new_record? || password != self.class.find(self.id).password
+  end
   def password_required?
-    crypted_password.blank? || !password.blank?
+    new_record? or not password.to_s.empty?
   end
 end

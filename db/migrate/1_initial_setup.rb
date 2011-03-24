@@ -240,44 +240,4 @@ class InitialSetup < ActiveRecord::Migration
     t.integer "position"
   end
 
-  create_table "users", :force => true do |t|
-    t.string   "login"
-    t.string   "email"
-    t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "remember_token"
-    t.datetime "remember_token_expires_at"
-    t.datetime "previous_login"
-    t.string   "signature"
-    t.datetime "login_time"
-    t.integer  "banned_by"
-    t.datetime "ban_time"
-    t.string   "ban_reason"
-    t.integer  "ban_times",                               :default => 0
-    t.string   "location"
-    t.text     "description"
-    t.text     "website"
-    t.integer  "rank_id"
-    t.integer  "user_level_id",                           :default => 1
-    t.integer  "theme_id"
-    t.string   "ip",                        :limit => 15
-    t.string   "date_display",                            :default => "%d %B %Y"
-    t.string   "time_display",                            :default => "%I:%M:%S%P"
-    t.integer  "per_page",                                :default => 30
-    t.string   "encrypted_email"
-    t.string   "time_zone"
-    t.string   "display_name"
-    t.string   "permalink"
-    t.boolean  "auto_subscribe",                          :default => true
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.string   "identifier"
-  end
-
-  add_index "users", ["id", "user_level_id"], :name => "index_users_on_id_and_user_level_id"
-  add_index "users", ["login"], :name => "index_users_on_login"
-  add_index "users", ["login_time"], :name => "index_users_on_login_time"
 end
