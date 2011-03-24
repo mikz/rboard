@@ -11,16 +11,16 @@
 
 ActiveRecord::Schema.define(:version => 20100204214710) do
 
-  create_table "banned_ips", :force => true do |t|
+  create_table "rboard_banned_ips", :force => true do |t|
     t.string   "ip"
     t.string   "reason"
     t.integer  "banned_by"
     t.datetime "ban_time"
   end
 
-  add_index "banned_ips", ["ban_time"], :name => "index_banned_ips_on_ban_time"
+  add_index "rboard_banned_ips", ["ban_time"], :name => "index_banned_ips_on_ban_time"
 
-  create_table "categories", :force => true do |t|
+  create_table "rboard_categories", :force => true do |t|
     t.string  "name"
     t.integer "parent_id"
     t.integer "position"
@@ -28,16 +28,16 @@ ActiveRecord::Schema.define(:version => 20100204214710) do
     t.string  "description"
   end
 
-  add_index "categories", ["parent_id"], :name => "index_categories_on_parent_id"
+  add_index "rboard_categories", ["parent_id"], :name => "index_categories_on_parent_id"
 
-  create_table "configurations", :force => true do |t|
+  create_table "rboard_configurations", :force => true do |t|
     t.string "key"
     t.string "value"
     t.text   "description"
     t.string "title"
   end
 
-  create_table "edits", :force => true do |t|
+  create_table "rboard_edits", :force => true do |t|
     t.integer  "user_id"
     t.integer  "post_id"
     t.string   "ip"
@@ -49,9 +49,9 @@ ActiveRecord::Schema.define(:version => 20100204214710) do
     t.integer  "ip_id"
   end
 
-  add_index "edits", ["ip_id"], :name => "index_edits_on_ip_id"
+  add_index "rboard_edits", ["ip_id"], :name => "index_edits_on_ip_id"
 
-  create_table "forums", :force => true do |t|
+  create_table "rboard_forums", :force => true do |t|
     t.string  "title"
     t.text    "description"
     t.integer "is_visible_to_id"
@@ -67,42 +67,42 @@ ActiveRecord::Schema.define(:version => 20100204214710) do
     t.boolean "open",                 :default => true
   end
 
-  add_index "forums", ["category_id"], :name => "index_forums_on_category_id"
-  add_index "forums", ["open"], :name => "index_forums_on_open"
-  add_index "forums", ["parent_id"], :name => "index_forums_on_parent_id"
-  add_index "forums", ["posts_count"], :name => "index_forums_on_posts_count"
-  add_index "forums", ["topics_count"], :name => "index_forums_on_topics_count"
+  add_index "rboard_forums", ["category_id"], :name => "index_forums_on_category_id"
+  add_index "rboard_forums", ["open"], :name => "index_forums_on_open"
+  add_index "rboard_forums", ["parent_id"], :name => "index_forums_on_parent_id"
+  add_index "rboard_forums", ["posts_count"], :name => "index_forums_on_posts_count"
+  add_index "rboard_forums", ["topics_count"], :name => "index_forums_on_topics_count"
 
-  create_table "group_users", :force => true do |t|
+  create_table "rboard_group_users", :force => true do |t|
     t.integer "user_id"
     t.integer "group_id"
   end
 
-  create_table "groups", :force => true do |t|
+  create_table "rboard_groups", :force => true do |t|
     t.string  "name"
     t.integer "owner_id"
     t.string  "identifier"
   end
 
-  create_table "groups_users", :id => false, :force => true do |t|
+  create_table "rboard_groups_users", :id => false, :force => true do |t|
     t.integer "group_id"
     t.integer "user_id"
   end
 
-  create_table "ip_users", :force => true do |t|
+  create_table "rboard_ip_users", :force => true do |t|
     t.integer  "ip_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "ips", :force => true do |t|
+  create_table "rboard_ips", :force => true do |t|
     t.string   "ip",         :limit => 15
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "messages", :force => true do |t|
+  create_table "rboard_messages", :force => true do |t|
     t.integer  "from_id"
     t.boolean  "from_read",    :default => false
     t.boolean  "from_deleted", :default => false
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(:version => 20100204214710) do
     t.datetime "created_at"
   end
 
-  create_table "moderations", :force => true do |t|
+  create_table "rboard_moderations", :force => true do |t|
     t.integer  "moderated_object_id"
     t.string   "moderated_object_type"
     t.integer  "user_id"
@@ -123,7 +123,7 @@ ActiveRecord::Schema.define(:version => 20100204214710) do
     t.integer  "forum_id"
   end
 
-  create_table "permissions", :force => true do |t|
+  create_table "rboard_permissions", :force => true do |t|
     t.boolean "can_see_forum",                    :default => false
     t.boolean "can_reply_to_topics",              :default => false
     t.boolean "can_post_stickies",                :default => false
@@ -179,11 +179,11 @@ ActiveRecord::Schema.define(:version => 20100204214710) do
     t.boolean "can_sticky_topics",                :default => false
   end
 
-  add_index "permissions", ["category_id"], :name => "index_permissions_on_category_id"
-  add_index "permissions", ["forum_id"], :name => "index_permissions_on_forum_id"
-  add_index "permissions", ["group_id"], :name => "index_permissions_on_group_id"
+  add_index "rboard_permissions", ["category_id"], :name => "index_permissions_on_category_id"
+  add_index "rboard_permissions", ["forum_id"], :name => "index_permissions_on_forum_id"
+  add_index "rboard_permissions", ["group_id"], :name => "index_permissions_on_group_id"
 
-  create_table "post_attachments", :force => true do |t|
+  create_table "rboard_post_attachments", :force => true do |t|
     t.string   "file_file_name"
     t.string   "file_content_type"
     t.integer  "avatar_file_size"
@@ -191,7 +191,7 @@ ActiveRecord::Schema.define(:version => 20100204214710) do
     t.integer  "post_id"
   end
 
-  create_table "posts", :force => true do |t|
+  create_table "rboard_posts", :force => true do |t|
     t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -205,21 +205,21 @@ ActiveRecord::Schema.define(:version => 20100204214710) do
     t.integer  "number",       :default => 1
   end
 
-  add_index "posts", ["id", "topic_id"], :name => "index_posts_on_id_and_topic_id"
-  add_index "posts", ["ip_id"], :name => "index_posts_on_ip_id"
+  add_index "rboard_posts", ["id", "topic_id"], :name => "index_posts_on_id_and_topic_id"
+  add_index "rboard_posts", ["ip_id"], :name => "index_posts_on_ip_id"
 
-  create_table "ranks", :force => true do |t|
+  create_table "rboard_ranks", :force => true do |t|
     t.string  "name"
     t.integer "posts_required"
     t.boolean "custom",         :default => false
   end
 
-  create_table "read_topics", :force => true do |t|
+  create_table "rboard_read_topics", :force => true do |t|
     t.integer "user_id"
     t.integer "topic_id"
   end
 
-  create_table "reports", :force => true do |t|
+  create_table "rboard_reports", :force => true do |t|
     t.integer  "user_id"
     t.integer  "reportable_id"
     t.string   "reportable_type"
@@ -228,7 +228,13 @@ ActiveRecord::Schema.define(:version => 20100204214710) do
     t.text     "text"
   end
 
-  create_table "subscriptions", :force => true do |t|
+  create_table "rboard_schema_migrations", :id => false, :force => true do |t|
+    t.string "version", :null => false
+  end
+
+  add_index "rboard_schema_migrations", ["version"], :name => "rboard_unique_schema_migrations", :unique => true
+
+  create_table "rboard_subscriptions", :force => true do |t|
     t.integer  "user_id"
     t.integer  "topic_id"
     t.integer  "posts_count"
@@ -237,12 +243,12 @@ ActiveRecord::Schema.define(:version => 20100204214710) do
     t.datetime "updated_at"
   end
 
-  create_table "themes", :force => true do |t|
+  create_table "rboard_themes", :force => true do |t|
     t.string  "name"
     t.boolean "is_default", :default => false
   end
 
-  create_table "topics", :force => true do |t|
+  create_table "rboard_topics", :force => true do |t|
     t.integer  "forum_id"
     t.string   "subject"
     t.integer  "user_id"
@@ -258,15 +264,15 @@ ActiveRecord::Schema.define(:version => 20100204214710) do
     t.integer  "moved_to_id"
   end
 
-  add_index "topics", ["id", "forum_id"], :name => "index_topics_on_id_and_forum_id"
-  add_index "topics", ["ip_id"], :name => "index_topics_on_ip_id"
+  add_index "rboard_topics", ["id", "forum_id"], :name => "index_topics_on_id_and_forum_id"
+  add_index "rboard_topics", ["ip_id"], :name => "index_topics_on_ip_id"
 
-  create_table "user_levels", :id => false, :force => true do |t|
+  create_table "rboard_user_levels", :id => false, :force => true do |t|
     t.string  "name"
     t.integer "position"
   end
 
-  create_table "users", :force => true do |t|
+  create_table "rboard_users", :force => true do |t|
     t.string   "login"
     t.string   "email"
     t.string   "crypted_password",          :limit => 40
@@ -303,8 +309,8 @@ ActiveRecord::Schema.define(:version => 20100204214710) do
     t.string   "identifier"
   end
 
-  add_index "users", ["id", "user_level_id"], :name => "index_users_on_id_and_user_level_id"
-  add_index "users", ["login"], :name => "index_users_on_login"
-  add_index "users", ["login_time"], :name => "index_users_on_login_time"
+  add_index "rboard_users", ["id", "user_level_id"], :name => "index_users_on_id_and_user_level_id"
+  add_index "rboard_users", ["login"], :name => "index_users_on_login"
+  add_index "rboard_users", ["login_time"], :name => "index_users_on_login_time"
 
 end

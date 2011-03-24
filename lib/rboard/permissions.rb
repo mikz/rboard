@@ -16,7 +16,7 @@ module Rboard::Permissions
       def permissions_for(thing = nil, single = false)
         return {} if thing.nil?
         association = "#{thing.class.to_s.downcase}_id"
-        conditions = "permissions.#{association} = '#{thing.id}'"
+        conditions = "#{table_name_prefix}permissions.#{association} = '#{thing.id}'"
         permission = permissions.first(:conditions => conditions)
         if permission.nil?
          {}

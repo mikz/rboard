@@ -76,6 +76,8 @@ begin
 rescue LoadError
 end
 
+ActiveRecord::Base.table_name_prefix = 'rboard_'
+
 # def puts str
 #   super caller.first if caller.first.index("shoulda.rb") == -1
 #   super str

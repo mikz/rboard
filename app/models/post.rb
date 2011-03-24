@@ -1,5 +1,5 @@
 class Post < ActiveRecord::Base
-  default_scope :order => "posts.created_at ASC"
+  default_scope :order => "#{Post.table_name}.created_at ASC"
 
   acts_as_list :column => "number", :scope => :topic_id
 
