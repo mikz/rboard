@@ -32,22 +32,11 @@ THEMES_DIRECTORY = Proc.new { File.join(Rails.public_path, "themes") }
 
 # Set this to false if you're integrating rboard into another app.
 # This determines if rake db:create:all is ran when running the install script.
-STANDALONE = true
+STANDALONE = false
+
+SEARCHING = false
 
 CONFIG = Rails::Initializer.run do |config|
-
-  config.gem 'by_star', :version => '0.6.3'
-  config.gem 'chronic'
-  config.gem 'coderay'
-  config.gem 'i18n'
-  config.gem 'dotiw'
-  config.gem 'haml', :version => "2.2.21"
-  config.gem 'highline'
-  config.gem 'paperclip', :version => '2.3.1.1'
-  config.gem 'RedCloth'
-  config.gem 'thinking-sphinx', :lib => 'thinking_sphinx'
-  config.gem 'will_paginate'
-
 
   # lol actionwebservice
   # lol activeresource
